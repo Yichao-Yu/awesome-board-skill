@@ -1,0 +1,17 @@
+{
+  "name": "awesome-board-skill",
+  "version": "1.0.0",
+  "description": "Awesome Board Simulator for Alexa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Alexa",
+    "awesome",
+    "skill"
+  ],
+  "dependencies": {
+    "alexa-sdk": "^1.0.0"
+  }
+}
