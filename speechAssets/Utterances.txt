@@ -10,3 +10,4 @@ AddAwesomenessUserIntent add new awesomeness for {LIST_OF_USERS}
 AddAwesomenessIntent {LIST_OF_AWESOMENESS}
 
 AddUserIntent add user {LIST_OF_USERS}
+AddUserIntent add Awesome Board user {LIST_OF_USERS}
