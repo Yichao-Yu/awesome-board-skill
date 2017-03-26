@@ -1,13 +1,58 @@
-{"intents": [
-    {"intent": "AwesomeBoardSummaryIntent"},
-    {"intent": "AwesomenessByUserIntent", "slots": [{"name": "user", "type": "LIST_OF_USERS"}]},
-    {"intent": "AddAwesomenessUserIntent", "slots": [{"name": "user", "type": "LIST_OF_USERS"}]},
-    {"intent": "AddAwesomenessIntent", "slots": [{"name": "awesomeness", "type": "LIST_OF_AWESOMENESS"}]},
-    {"intent": "AddUserIntent", "slots": [{"name": "user", "type": "LIST_OF_USERS"}]},
-    {"intent": "AMAZON.YesIntent"},
-    {"intent": "AMAZON.NoIntent"},
-    {"intent": "AMAZON.HelpIntent"},
-    {"intent": "AMAZON.StopIntent"},
-    {"intent": "AMAZON.CancelIntent"}
+{
+  "intents": [
+    {
+      "intent": "AwesomeBoardSummaryIntent"
+    },
+    {
+      "intent": "AwesomenessByUserIntent",
+      "slots": [
+        {
+          "name": "user",
+          "type": "LIST_OF_USERS"
+        }
+      ]
+    },
+    {
+      "intent": "AddAwesomenessUserIntent",
+      "slots": [
+        {
+          "name": "user",
+          "type": "LIST_OF_USERS"
+        }
+      ]
+    },
+    {
+      "intent": "AddAwesomenessIntent",
+      "slots": [
+        {
+          "name": "awesomeness",
+          "type": "LIST_OF_AWESOMENESS"
+        }
+      ]
+    },
+    {
+      "intent": "AddUserIntent",
+      "slots": [
+        {
+          "name": "user",
+          "type": "LIST_OF_USERS"
+        }
+      ]
+    },
+    {
+      "intent": "AMAZON.YesIntent"
+    },
+    {
+      "intent": "AMAZON.NoIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
   ]
 }
