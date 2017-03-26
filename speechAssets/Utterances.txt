@@ -1,5 +1,12 @@
-AwesomeBoardListIntent
+AwesomeBoardSummaryIntent why we are awesome
+AwesomeBoardSummaryIntent are we awesome
 
-AwesomenessByNameIntent
+AwesomenessByUserIntent why {LIST_OF_USERS} is awesome
+AwesomenessByUserIntent tell me why {LIST_OF_USERS} is awesome
+AwesomenessByUserIntent is {LIST_OF_USERS} awesome
 
-AddAwesomenessIntent
+AddAwesomenessUserIntent add new awesomeness for {LIST_OF_USERS}
+
+AddAwesomenessIntent {LIST_OF_AWESOMENESS}
+
+AddUserIntent add user {LIST_OF_USERS}
