@@ -12,6 +12,7 @@
     "skill"
   ],
   "dependencies": {
-    "alexa-sdk": "^1.0.0"
+    "alexa-sdk": "^1.0.7",
+    "firebase": "^3.7.3"
   }
 }

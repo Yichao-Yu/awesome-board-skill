@@ -1,4 +1,3 @@
-AwesomeBoardSummaryIntent why we are awesome
 AwesomeBoardSummaryIntent are we awesome
 
 AwesomenessByUserIntent why {user} is awesome

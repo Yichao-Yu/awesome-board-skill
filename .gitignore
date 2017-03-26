@@ -1,0 +1,4 @@
+.DS_Store
+*.zip
+src/node_modules/
+config.json
