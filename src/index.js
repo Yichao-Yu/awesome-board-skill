@@ -1,11 +1,16 @@
 'use strict';
 const Alexa = require("alexa-sdk");
 const firebase = require("firebase");
+const admin = require('firebase-admin');
 const config = require("config.json");
 const appId = config.appId;
 
 // Initialize Firebase
 firebase.initializeApp(config.firebaseConfig);
+admin.initializeApp({
+    credential: admin.credential.cert(config.firebaseAdminConfig),
+    databaseURL: config.firebaseDatabaseUrl
+});
 
 exports.handler = (event, context) => {
     const alexa = Alexa.handler(event, context);
@@ -16,15 +21,32 @@ exports.handler = (event, context) => {
 
 const handlers = {
     'NewSession': function () {
-        this.emit(':ask', 'Welcome to Awesome Board. Ask whether are we awesome, ' +
-            'or say add user to a new Awesome Board user. ' +
-            'Say cancel to quit.');
+        let firebaseUid = this.event.session.user.accessToken;
+        if (firebaseUid) {
+            let attributes = this.attributes;
+            let self = this;
+            admin.auth().createCustomToken(firebaseUid)
+                .then(function (customToken) {
+                    attributes['customToken'] = customToken;
+                    self.emit(':ask', 'Welcome to Awesome Board. Ask whether are we awesome, ' +
+                        'or say add user to a new Awesome Board user. ' +
+                        'Say cancel to quit.');
+                })
+                .catch(function (error) {
+                    console.log("Error creating custom token:", error);
+                });
+            return false;
+        } else {
+            self.emit(':ask', 'Welcome to Awesome Board. Ask whether are we awesome, ' +
+                'or say add user to a new Awesome Board user. ' +
+                'Say cancel to quit.');
+        }
     },
     'AMAZON.StopIntent': function () {
         this.emit(':tell', "Goodbye!");
     },
     'AMAZON.CancelIntent': function () {
-        this.emit(':tell', "Goodbye!");
+        this.emit(':tellWithLinkAccountCard', "Goodbye!");
     },
     'SessionEndedRequest': function () {
         this.emit(':tell', "Goodbye!");
@@ -37,10 +59,26 @@ const handlers = {
 const awesomeHandlers = {
     'AwesomeBoardSummaryIntent': function () {
         console.log("AwesomeBoardSummaryIntent event", JSON.stringify(this.event));
+        let firebaseUid = this.event.session.user.accessToken;
+        let self = this;
+        if (firebaseUid) {
+            console.log("Sign in user " + accessToken);
+            firebase.auth().signInWithCustomToken(accessToken).catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log('Sign in user error :' + errorCode + ' ' + errorMessage);
+                self.emit(':tell', "Something went wrong. Bye.");
+            });
+        } else {
+            console.log("User access token is empty");
+            this.emit(':tellWithLinkAccountCard', "Please link the Awesome Board account first.");
+        }
+
         let numOfUsers = 0;
         let numOfAwesomeness = 0;
         let awesomenessesRef = firebase.database().ref("awesomenesses");
-        let self = this;
+        console.log(awesomenessesRef);
         awesomenessesRef.once('value').then(function (snapshot) {
             numOfUsers = snapshot.numChildren();
             console.log("Current awesome board users ", numOfUsers);
@@ -57,11 +95,17 @@ const awesomeHandlers = {
                     'Say add user and spell user name to add user to the Awesome Board. ' +
                     'Say add new awesomeness and user name to make us awesome! ');
             }
+        }).catch(function (error) {
+            console.log(error);
+            self.emit(':tellWithLinkAccountCard', "Please link the Awesome Board account first.");
         });
+        console.log("AwesomeBoardSummaryIntent event end");
     },
     'AwesomenessByUserIntent': function () {
         console.log("AwesomenessByUserIntent event", JSON.stringify(this.event));
         let awesomeUser = this.event.request.intent.slots.user.value;
+        console.log(this.event.request.session.user.userId);
+        console.log(this.event.request.session.user.accessToken);
         let awesomenessList = [];
         let awesomenessesRef = firebase.database().ref("awesomenesses/" + awesomeUser);
         let self = this;
